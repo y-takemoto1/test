@@ -29,7 +29,6 @@ if press_button:
     options.add_argument('--disable-dev-shm-usage')
 
     # webdriver_managerによりドライバーをインストール
-　  # chromiumを使用したいのでchrome_type引数でchromiumを指定しておく
     CHROMEDRIVER = ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
     service = fs.Service(CHROMEDRIVER)
     driver = webdriver.Chrome(
