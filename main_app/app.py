@@ -17,7 +17,7 @@ press_button = st.button("スクレイピング開始")
 
 if press_button:
     # スクレイピングするwebサイトのURL
-    URL = "https://www.staff-q.co.jp/"
+    URL = "https://mynavi-ms.jp/search/fukuoka/area-all"
 
     # ドライバのオプション
     options = ChromeOptions()
