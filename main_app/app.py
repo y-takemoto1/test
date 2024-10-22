@@ -29,8 +29,6 @@ if press_button:
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
 
-    st.text(f'options : {options}')
-
     # webdriver_managerによりドライバーをインストール
     CHROMEDRIVER = ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
     service = fs.Service(CHROMEDRIVER)
@@ -41,6 +39,7 @@ if press_button:
 
     # URLで指定したwebページを開く
     driver.get(URL)
+    st.text(f'driver : {driver}')
 
     # webページ上のタイトル画像を取得
     img = driver.find_element(By.TAG_NAME, 'img')
