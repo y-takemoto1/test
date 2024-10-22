@@ -17,16 +17,19 @@ press_button = st.button("スクレイピング開始")
 
 if press_button:
     # スクレイピングするwebサイトのURL
-    URL = "https://mynavi-ms.jp/search/fukuoka/area-all"
+    URL = "https://www.staff-q.co.jp/"
 
     # ドライバのオプション
     options = ChromeOptions()
+
 
     # option設定を追加（設定する理由はメモリの削減）
     options.add_argument("--headless")
     options.add_argument('--disable-gpu')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
+
+    print('options : ', options)
 
     # webdriver_managerによりドライバーをインストール
     CHROMEDRIVER = ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
