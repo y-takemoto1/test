@@ -24,7 +24,7 @@ if press_button:
 
 
     # option設定を追加（設定する理由はメモリの削減）
-    options.add_argument("--headless")
+    #options.add_argument("--headless")
     options.add_argument('--disable-gpu')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
@@ -43,7 +43,9 @@ if press_button:
     job_cards = driver.find_elements(By.XPATH, '//div[@class="job-summary"]/div/h3/a[@target="_blank"]')
     table_cards = driver.find_elements(By.CLASS_NAME, 'job-summary-table')
 
-    
+    print([t.text for t in job_cards])
+    print([s.text for s in table_cards])
+
     st.text(f'job_cards : {job_cards}')
     st.text(f'table_cards : {table_cards}')
 
