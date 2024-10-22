@@ -2,6 +2,9 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
+import streamlit as st
+
+st.title('test')
 
 # ChromeDriverのパスを取得
 service = ChromeService(ChromeDriverManager().install())
@@ -19,6 +22,10 @@ table_cards = driver.find_elements(By.CLASS_NAME, 'job-summary-table')
 # 要素のテキストを表示
 print([t.text for t in job_cards])
 print([s.text for s in table_cards])
+
+st.text([t.text for t in job_cards])
+st.text('-----------------------------')
+st.text([s.text for s in table_cards])
 
 # ブラウザを閉じる
 driver.quit()
