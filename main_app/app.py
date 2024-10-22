@@ -7,10 +7,10 @@ import streamlit as st
 import os
 
 st.text('ルート確認１')
-URL_input = st.text_input('URL')
+URL_input2 = st.text_input('URL')
 
 # スクレイピングしたいURL（例: 福岡の求人）
-url = URL_input
+url = URL_input2
 
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0'
