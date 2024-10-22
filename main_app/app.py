@@ -1,31 +1,156 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
+import time
+import openpyxl
+import requests
+from bs4 import BeautifulSoup
+import re
 import streamlit as st
+import os
 
-st.title('test')
+st.text('ルート確認１')
+URL_input = st.text_input('URL')
 
-# ChromeDriverのパスを取得
-service = ChromeService(ChromeDriverManager().install())
+# スクレイピングしたいURL（例: 福岡の求人）
+url = URL_input
 
-# Chromeブラウザを起動
-driver = webdriver.Chrome(service=service)
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36 Edg/122.0.0.0'
+}
 
-driver.implicitly_wait(5)
-driver.get('https://mynavi-ms.jp/search/fukuoka/area-all/')
 
-# クラス名で要素を取得
-job_cards = driver.find_elements(By.XPATH, '//div[@class="job-summary"]/div/h3/a[@target="_blank"]')
-table_cards = driver.find_elements(By.CLASS_NAME, 'job-summary-table')
+# エクセルを開く
+wb = openpyxl.Workbook()
+ws = wb.active
 
-# 要素のテキストを表示
-print([t.text for t in job_cards])
-print([s.text for s in table_cards])
+# 保存するフォルダのパス
+folder_path = 'C:/aggregate'
+# 保存するファイル名
+file_name = 'mynavi-ms.xlsx'
+# 完全なファイルパス
+file_path = os.path.join(folder_path, file_name)
 
-st.text([t.text for t in job_cards])
-st.text('-----------------------------')
-st.text([s.text for s in table_cards])
+st.title('マイナビシニアの求人検索')
 
-# ブラウザを閉じる
-driver.quit()
+# 初期の値を表示するための空の場所を作成
+text_placeholder = st.empty()
+
+# 初期化
+if 'stop' not in st.session_state:
+    st.session_state.stop = False
+if 'processing' not in st.session_state:
+    st.session_state.processing = False
+
+
+if st.button('開始', disabled=st.session_state.processing):
+    st.session_state.stop = False
+    # 中断ボタン
+    st.text('ルート確認２')
+    if url:
+        # ステータスコードをチェック
+        response = requests.get(url, headers=headers, allow_redirects=True)
+        st.text(f'URL:{url}')
+        st.text(f'headers:{headers}')
+        st.text(f'response:{response}')
+        st.text(f'code:{response.status_code}')
+        if response.status_code == 200:
+            st.text('ルート確認3')
+            c = 1  # 行数
+            j = 1  # ページ数
+            while c <= 10:
+                print(f'Processing page {j}...')
+                soup = BeautifulSoup(response.text, 'html.parser')
+                job_cards = soup.find_all('div', class_='job-summary__header')
+                table_cards = soup.find_all('table', class_='job-summary-table')
+
+                if not job_cards:
+                    print('求人が見つかりませんでした。')
+                    break
+                for job, job_table in zip(job_cards, table_cards):
+                    print('testcount:', c)
+
+                    if st.session_state.stop:
+                        st.session_state.running = False
+                        st.warning("処理が中断されました。")
+                        break
+
+
+                    # プレースホルダーに新しいテキストを表示
+                    text_placeholder.text(f'読込数：{c}')
+
+                    # 求人タイトルを取得
+                    title = job.find('a', target='_blank').text.strip()
+                    print('求人タイトル:', title)
+                    
+                    # 会社名を取得
+                    company = job.find('p', class_='job-summary__name').text.strip()
+                    print('会社名:', company)
+
+                    # テーブルデータを取得（例として最初のテーブルを取得）
+                    rows = job_table.find_all('tr')
+
+                    # テーブルデータをリストに格納
+                    table_data = []
+                    for row in rows:
+                        cols = row.find_all('td')
+                        cols = [col.get_text(strip=True) for col in cols]
+                        if cols:  # 空でない場合のみ追加
+                            table_data.append(cols)
+
+                    # 1つのセルにデータを書き込むための文字列を作成
+                    cell_data = '\n'.join(['\t'.join(row) for row in table_data])
+
+
+                    # 詳細ページのリンクを取得
+                    job_link = 'https://mynavi-ms.jp/' + job.find('a')['href']
+
+                    # 待機
+                    time.sleep(10)
+                    # 詳細ページにリクエストを送信
+                    job_response = requests.get(job_link)
+                    job_soup = BeautifulSoup(job_response.text, 'html.parser')
+
+                    # 電話番号を正規表現で抽出（例: 012-345-6789）
+                    phone_numbers = re.findall(r'\d{2,4}-\d{2,4}-\d{2,4}', job_soup.text)
+                    phone_numbers2 = [number for number in phone_numbers if not number.startswith("0120")]
+                    if phone_numbers2:
+                        print('電話番号:', phone_numbers)
+                        # Excelファイルに書き込mi 
+                        ws.cell(row=c, column=1, value=title)
+                        ws.cell(row=c, column=2, value=company)
+                        ws.cell(row=c, column=3, value=', '.join(phone_numbers) if phone_numbers else 'なし')
+                        ws.cell(row=c, column=4, value=cell_data)
+                        c += 1
+                    else:
+                        print('電話番号は見つかりませんでした。')
+                    
+                    print('-' * 40)
+                # 次のページを探す
+                next_page = soup.find('a', class_='search-pagenation__next')
+                if next_page and 'href' in next_page.attrs:
+                    next_url = 'https://mynavi-ms.jp' + next_page['href']
+                    response = requests.get(next_url, headers=headers)
+                    time.sleep(5)  # サーバーへの負荷を避けるためにスリープ
+                    j += 1
+                else:
+                    print('pageEnd')
+                    break  # 次のページがない場合は終了
+            else:
+                st.text('完了しました。')
+                #st.text("C:/aggregate/に保存されました。")
+        else:
+            print('リクエストが失敗しました。ステータスコード:', response.status_code)
+'''
+# フォルダの有無確認
+if not os.path.exists(folder_path):
+    # フォルダ生成
+    os.mkdir(folder_path)
+'''
+# エクセルファイルを保存
+wb.save("mynavi-ms.xlsx")
+wb.close()
+st.session_state.processing = False
+'''
+with open(file_path, 'rb') as f:
+    st.download_button(label="Download", data=f, file_name=file_name, mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+'''
+if st.button("中断", disabled=st.session_state.processing):
+    st.session_state.stop = True
