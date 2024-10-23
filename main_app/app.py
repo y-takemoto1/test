@@ -159,5 +159,8 @@ if press_button:
 # エクセルファイルを保存
 wb.save("app.xlsx")
 wb.close()
+
+st.download_button(label="DownLoad", data=wb, file_name='app.xlsx')
+
 if st.button("中断", disabled=st.session_state.processing):
     st.session_state.stop = True
