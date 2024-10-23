@@ -71,7 +71,7 @@ if press_button:
             print(f'Processing page {j}...')
             st.text('ルート確認4')
             # 求人情報の取得
-            job_cards = driver.find_element(By.TAG_NAME, "job_seen_beacon")
+            job_cards = driver.find_element(By.TAG_NAME, "slider_item css-17bghu4 eu4oa1w0")
             st.text(job_cards)
 
             if not job_cards:
@@ -79,7 +79,7 @@ if press_button:
                 break
             for job in job_cards:
                 st.text('testcount:', c)
-
+                st.text('ルート確認5')
                 if st.session_state.stop:
                     st.session_state.running = False
                     st.warning("処理が中断されました。")
