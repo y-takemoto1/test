@@ -42,13 +42,13 @@ if press_button:
     # webページ上のタイトル画像を取得
     img = driver.find_element(By.TAG_NAME, 'img')
     st.text(f'img : {img}')
-    #src = img.get_attribute('src')
+    src = img.get_attribute('src')
 
     st.text([s.text for s in img])
 
     # 取得した画像をカレントディレクトリに保存
-    #with open(f"tmp_img.png", "wb") as f:
-    #    f.write(img.screenshot_as_png)
+    with open(f"tmp_img.png", "wb") as f:
+        f.write(img.screenshot_as_png)
 
     # 保存した画像をstreamlitアプリ上に表示
     st.image("tmp_img.png")
