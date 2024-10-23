@@ -46,8 +46,8 @@ if press_button:
     st.text([s.text for s in img])
 
     # 取得した画像をカレントディレクトリに保存
-    with open(f"tmp_img.png", "wb") as f:
-        f.write(img.screenshot_as_png)
+    #with open(f"tmp_img.png", "wb") as f:
+    #    f.write(img.screenshot_as_png)
 
     # 保存した画像をstreamlitアプリ上に表示
     st.image("tmp_img.png")
