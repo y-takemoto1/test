@@ -71,8 +71,7 @@ if press_button:
             print(f'Processing page {j}...')
             st.text('ルート確認4')
             # 求人情報の取得
-            job_cards = driver.find_element(By.CLASS_NAME, "slider_item css-17bghu4 eu4oa1w0")
-            st.text(job_cards)
+
             # webページ上のタイトル画像を取得
             img = driver.find_element(By.TAG_NAME, 'img')
             src = img.get_attribute('src')
@@ -84,6 +83,9 @@ if press_button:
             # 保存した画像をstreamlitアプリ上に表示
             st.image("tmp_img.png")
 
+            job_cards = driver.find_element(By.CLASS_NAME, "slider_item css-17bghu4 eu4oa1w0")
+            st.text(job_cards)
+            
             if not job_cards:
                 st.text('求人が見つかりませんでした。')
                 break
