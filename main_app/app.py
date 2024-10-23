@@ -155,14 +155,14 @@ if press_button:
     # webページを閉じる
     driver.close()
 
-        # Excelファイルをメモリに保存
-    excel_buffer = BytesIO()
-    wb.save(excel_buffer)
-    wb.close()
-    excel_buffer.seek(0)
+    # Excelファイルをメモリに保存
+excel_buffer = BytesIO()
+wb.save(excel_buffer)
+wb.close()
+excel_buffer.seek(0)
 
     # スクレピン完了したことをstreamlitアプリ上に表示する
-    st.write("スクレイピング完了!!!")
+st.write("スクレイピング完了!!!")
 # エクセルファイルを保存
 wb.save("app.xlsx")
 wb.close()
