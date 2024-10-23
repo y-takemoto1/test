@@ -13,6 +13,7 @@ import re
 import openpyxl
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from io import BytesIO
 
 # タイトルを設定
 st.title("seleniumテストアプリ")
@@ -138,7 +139,7 @@ if press_button:
             next_page = driver.find_element(By.TAG_NAME, 'Next Page')
             if next_page and 'href' in next_page.attrs:
                 next_url = 'https://mynavi-ms.jp' + next_page['href']
-                response = driver.get(next_url)
+                driver = driver.get(next_url)
                 time.sleep(5)  # サーバーへの負荷を避けるためにスリープ
                 j += 1
             else:
@@ -154,13 +155,21 @@ if press_button:
     # webページを閉じる
     driver.close()
 
+        # Excelファイルをメモリに保存
+    excel_buffer = BytesIO()
+    wb.save(excel_buffer)
+    wb.close()
+    excel_buffer.seek(0)
+
     # スクレピン完了したことをstreamlitアプリ上に表示する
     st.write("スクレイピング完了!!!")
 # エクセルファイルを保存
 wb.save("app.xlsx")
 wb.close()
 
-st.download_button(label="DownLoad", data=wb, file_name='app.xlsx')
+# ダウンロードボタンを表示
+st.download_button(label="Download Excel", data=excel_buffer, file_name='app.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
 
 if st.button("中断", disabled=st.session_state.processing):
     st.session_state.stop = True
