@@ -69,6 +69,7 @@ if press_button:
         j = 1  # ページ数
         while c <= 10:
             print(f'Processing page {j}...')
+            st.text('ルート確認4')
             # 求人情報の取得
             job_cards = driver.find_elements(By.CLASS_NAME, "slider_item css-17bghu4 eu4oa1w0")
 
@@ -156,19 +157,20 @@ if press_button:
     driver.close()
 
     # Excelファイルをメモリに保存
-excel_buffer = BytesIO()
-wb.save(excel_buffer)
-wb.close()
-excel_buffer.seek(0)
+    excel_buffer = BytesIO()
+    wb.save(excel_buffer)
+    wb.close()
+    excel_buffer.seek(0)
+
+    # ダウンロードボタンを表示
+    st.download_button(label="Download Excel", data=excel_buffer, file_name='app.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
     # スクレピン完了したことをstreamlitアプリ上に表示する
-st.write("スクレイピング完了!!!")
+    st.write("スクレイピング完了!!!")
 # エクセルファイルを保存
 wb.save("app.xlsx")
 wb.close()
 
-# ダウンロードボタンを表示
-st.download_button(label="Download Excel", data=excel_buffer, file_name='app.xlsx', mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 
 if st.button("中断", disabled=st.session_state.processing):
