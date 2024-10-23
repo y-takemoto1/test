@@ -40,8 +40,10 @@ if press_button:
     driver.get(URL)
 
     # webページ上のタイトル画像を取得
-    img = driver.find_element(By.TAG_NAME, 'img')
+    img = driver.find_elements(By.TAG_NAME, 'img')
     src = img.get_attribute('src')
+
+    st.text([s.text for s in img])
 
     # 取得した画像をカレントディレクトリに保存
     with open(f"tmp_img.png", "wb") as f:
