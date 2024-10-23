@@ -12,12 +12,14 @@ from selenium.webdriver.common.by import By
 # タイトルを設定
 st.title("seleniumテストアプリ")
 
+url = st.text_input('URL入力')
+
 # ボタンを作成(このボタンをアプリ上で押すと"if press_button:"より下の部分が実行される)
 press_button = st.button("スクレイピング開始")
 
 if press_button:
     # スクレイピングするwebサイトのURL
-    URL = "https://mynavi-ms.jp/search/fukuoka/area-all/"
+    URL = url
 
     # ドライバのオプション
     options = ChromeOptions()
