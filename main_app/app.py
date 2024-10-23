@@ -71,7 +71,7 @@ if press_button:
             print(f'Processing page {j}...')
             st.text('ルート確認4')
             # 求人情報の取得
-            job_cards = driver.find_elements(By.CLASS_NAME, "job_seen_beacon")
+            job_cards = driver.find_element(By.TAG_NAME, "job_seen_beacon")
             st.text(job_cards)
 
             if not job_cards:
@@ -84,7 +84,6 @@ if press_button:
                     st.session_state.running = False
                     st.warning("処理が中断されました。")
                     break
-
 
                 # プレースホルダーに新しいテキストを表示
                 text_placeholder.text(f'読込数：{c}')
