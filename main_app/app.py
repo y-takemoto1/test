@@ -83,9 +83,9 @@ if press_button:
             # 保存した画像をstreamlitアプリ上に表示
             st.image("tmp_img.png")
 
-            job_cards = driver.find_element(By.CLASS_NAME, "slider_item css-17bghu4 eu4oa1w0")
+            job_cards = driver.find_element(By.ID, "FindJobs")
             st.text(job_cards)
-            
+
             if not job_cards:
                 st.text('求人が見つかりませんでした。')
                 break
