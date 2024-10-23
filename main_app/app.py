@@ -22,6 +22,12 @@ url = 'https://jp.indeed.com/jobs?q=%E6%AD%A3%E7%A4%BE%E5%93%A1&l=%E7%A6%8F%E5%B
 # 初期の値を表示するための空の場所を作成
 text_placeholder = st.empty()
 
+# 初期化
+if 'stop' not in st.session_state:
+    st.session_state.stop = False
+if 'processing' not in st.session_state:
+    st.session_state.processing = False
+
 # エクセルを開く
 wb = openpyxl.Workbook()
 ws = wb.active
@@ -150,6 +156,8 @@ if press_button:
 
     # スクレピン完了したことをstreamlitアプリ上に表示する
     st.write("スクレイピング完了!!!")
-
+# エクセルファイルを保存
+wb.save("app.xlsx")
+wb.close()
 if st.button("中断", disabled=st.session_state.processing):
     st.session_state.stop = True
