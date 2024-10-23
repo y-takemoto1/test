@@ -74,10 +74,10 @@ if press_button:
             job_cards = driver.find_elements(By.CLASS_NAME, "slider_item css-17bghu4 eu4oa1w0")
 
             if not job_cards:
-                print('求人が見つかりませんでした。')
+                st.text('求人が見つかりませんでした。')
                 break
             for job in job_cards:
-                print('testcount:', c)
+                st.text('testcount:', c)
 
                 if st.session_state.stop:
                     st.session_state.running = False
@@ -90,11 +90,11 @@ if press_button:
 
                 # 求人タイトルを取得
                 title = job.find_element(By.TAG_NAME, 'title').text.strip()
-                print('求人タイトル:', title)
+                st.text('求人タイトル:', title)
                 
                 # 会社名を取得
                 company = job.find_element(By.ID, 'company-name').text.strip()
-                print('会社名:', company)
+                st.text('会社名:', company)
 
                 # 詳細ページのリンクを取得
                 job_link = 'https://mynavi-ms.jp/' + job.find('a')['href']
@@ -106,11 +106,11 @@ if press_button:
 
                 # 勤務地を取得
                 location = job.find_element(By.ID, 'jobLocationText').text.strip()
-                print('勤務地：', location)
+                st.text('勤務地：', location)
 
                 # 仕事内容
                 job_description = job.find_element(By.TAG_NAME, 'JobDescription')
-                print('仕事内容：', job_description)
+                st.text('仕事内容：', job_description)
 
                 # 電話番号を含む要素を取得
                 text_elements = driver.find_elements(By.CSS_SELECTOR, '.phone')  # 適切なセレクタを使用
@@ -119,7 +119,7 @@ if press_button:
                 phone_numbers = re.findall(r'\b\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{4}\b', all_text)
                 phone_numbers2 = [number for number in phone_numbers if not number.startswith("0120")]
                 if phone_numbers2:
-                    print('電話番号:', phone_numbers)
+                    st.text('電話番号:', phone_numbers)
                     # Excelファイルに書き込mi 
                     ws.cell(row=c, column=1, value=title)
                     ws.cell(row=c, column=2, value=company)
@@ -128,7 +128,7 @@ if press_button:
                     ws.cell(row=c, column=5, value=job_description)
                     c += 1
                 else:
-                    print('電話番号は見つかりませんでした。')
+                    st.text('電話番号は見つかりませんでした。')
                 driver.back()
                 print('-' * 40)
                 WebDriverWait(driver, 10).until(
@@ -144,13 +144,13 @@ if press_button:
                 time.sleep(5)  # サーバーへの負荷を避けるためにスリープ
                 j += 1
             else:
-                print('pageEnd')
+                st.text('pageEnd')
                 break  # 次のページがない場合は終了
         else:
             st.text('完了しました。')
             #st.text("C:/aggregate/に保存されました。")
     else:
-        print('リクエストが失敗しました。ステータスコード')
+        st.text('リクエストが失敗しました。ステータスコード')
 
 
     # webページを閉じる
