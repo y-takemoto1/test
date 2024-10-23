@@ -72,6 +72,7 @@ if press_button:
             st.text('ルート確認4')
             # 求人情報の取得
             job_cards = driver.find_elements(By.CLASS_NAME, "slider_item css-17bghu4 eu4oa1w0")
+            st.text(job_cards)
 
             if not job_cards:
                 st.text('求人が見つかりませんでした。')
