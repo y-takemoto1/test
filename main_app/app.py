@@ -71,7 +71,7 @@ if press_button:
             print(f'Processing page {j}...')
             st.text('ルート確認4')
             # 求人情報の取得
-            job_cards = driver.find_elements(By.CLASS_NAME, "slider_item css-17bghu4 eu4oa1w0")
+            job_cards = driver.find_elements(By.CLASS_NAME, "job_seen_beacon")
             st.text(job_cards)
 
             if not job_cards:
