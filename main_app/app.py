@@ -41,7 +41,7 @@ if press_button:
 
     # webページ上のタイトル画像を取得
     img = driver.find_elements(By.TAG_NAME, 'img')
-    st.text('img : ', img)
+    st.text(f'img : {img}')
     #src = img.get_attribute('src')
 
     st.text([s.text for s in img])
