@@ -44,8 +44,6 @@ if press_button:
     st.text(f'img : {img}')
     src = img.get_attribute('src')
 
-    st.text([s.text for s in img])
-
     # 取得した画像をカレントディレクトリに保存
     with open(f"tmp_img.png", "wb") as f:
         f.write(img.screenshot_as_png)
