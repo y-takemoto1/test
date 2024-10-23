@@ -2,9 +2,10 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from time import sleep
+from webdriver_manager.core.os_manager import ChromeType
 
 # ChromeDriverのパスを取得
-driver_path = ChromeDriverManager().install()
+driver_path = ChromeDriverManager(chrome_type=ChromeType.CHROMIUM).install()
 
 # サービスオブジェクトを作成
 service = ChromeService(executable_path=driver_path)
