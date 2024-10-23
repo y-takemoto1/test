@@ -1,31 +1,28 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
-from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
+# coding:utf-8
 import streamlit as st
+from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome import service as fs
+from selenium.webdriver import ChromeOptions
 
-st.title('test')
+# タイトルを設定
+st.title("seleniumテストアプリ")
 
-# ChromeDriverのパスを取得
-service = ChromeService(ChromeDriverManager().install())
+# スクレイピングするwebサイトのURL
+URL = "https://ohenziblog.com"
 
-# Chromeブラウザを起動
-driver = webdriver.Chrome(service=service)
+# webdriver_managerによりドライバーをインストール
+CHROMEDRIVER = ChromeDriverManager().install()
+service = fs.Service(CHROMEDRIVER)
+driver = webdriver.Chrome(
+                          service=service
+                         )
 
-driver.implicitly_wait(5)
-driver.get('https://mynavi-ms.jp/search/fukuoka/area-all/')
+# URLで指定したwebページを開く
+driver.get(URL)
 
-# クラス名で要素を取得
-job_cards = driver.find_elements(By.XPATH, '//div[@class="job-summary"]/div/h3/a[@target="_blank"]')
-table_cards = driver.find_elements(By.CLASS_NAME, 'job-summary-table')
+# webページを閉じる
+driver.close()
 
-# 要素のテキストを表示
-print([t.text for t in job_cards])
-print([s.text for s in table_cards])
-
-st.text([t.text for t in job_cards])
-st.text('-----------------------------')
-st.text([s.text for s in table_cards])
-
-# ブラウザを閉じる
-driver.quit()
+# スクレピン完了したことをstreamlitアプリ上に表示する
+st.write("selenium終了")
