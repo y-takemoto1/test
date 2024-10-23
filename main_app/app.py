@@ -11,10 +11,17 @@ st.title("seleniumテストアプリ")
 # スクレイピングするwebサイトのURL
 URL = "https://ohenziblog.com"
 
+# ドライバのオプション
+options = ChromeOptions()
+
+# option設定を追加
+options.add_argument("--headless")  # ブラウザを画面に表示せずに起動できる（streamlit cloudでは、この設定は必須）
+
 # webdriver_managerによりドライバーをインストール
 CHROMEDRIVER = ChromeDriverManager().install()
 service = fs.Service(CHROMEDRIVER)
 driver = webdriver.Chrome(
+                          options=options,
                           service=service
                          )
 
