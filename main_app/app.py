@@ -75,6 +75,7 @@ if press_button:
             # webページ上のタイトル画像を取得
             img = driver.find_element(By.TAG_NAME, 'img')
             st.text(img)
+            st.image(img)
             src = img.get_attribute('src')
 
             # 取得した画像をカレントディレクトリに保存
@@ -85,7 +86,7 @@ if press_button:
             st.image("tmp_img.png")
 
             job_cards = driver.find_element(By.ID, "FindJobs")
-            st.text(job_cards)
+            st.experimental_fragment(job_cards)
 
             if not job_cards:
                 st.text('求人が見つかりませんでした。')
