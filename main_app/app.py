@@ -9,6 +9,7 @@ from selenium.webdriver import ChromeOptions
 from webdriver_manager.core.os_manager import ChromeType
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 import openpyxl
 
@@ -49,18 +50,20 @@ if press_button:
     time.sleep(10)
     c = 1
     j = 1
+    k = 1
 
     # 1ページにつき15件あるため15件単位取得される(例：10にすると150件取得可能)
     #　 　　　　↓
     while j <= 10:
         print('COUNT:', c)
         time.sleep(1)
-        while True:
+        while k <= 5:
             try:
                 links = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'job_seen_beacon')))
                 break
             except Exception as e:
-                print("求人情報の取得に失敗:", e)
+                k += 1
+                st.text(f"求人情報の取得に失敗:{e}")
 
         for link in links:
             # リンクをクリックする前に、再度要素を取得
