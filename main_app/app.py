@@ -58,7 +58,17 @@ if press_button:
         time.sleep(5)
         st.text('ルート確認2')
         while k <= 2:
-            st.text('ルート')
+            st.text('ルート1')
+            elements = driver.find_elements(By.XPATH, '//*[@your-attribute-name]')
+
+            # 各要素のテキストや属性を表示
+            for element in elements:
+                st.text(element.text)  # テキストを取得
+                # 例えば、特定の属性の値を取得したい場合
+                attribute_value = element.get_attribute('your-attribute-name')
+                st.text(attribute_value)
+                st.text('ルート2')
+
             try:
                 links = wait.until(EC.presence_of_all_elements_located((By.ID, 'mainContentTable')))
                 #links = driver.find_element(By.CLASS_NAME, 'job_seen_beacon')
