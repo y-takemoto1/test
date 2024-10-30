@@ -62,7 +62,7 @@ if press_button:
         while k <= 5:
             try:
                 #links = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'job_seen_beacon')))
-                links = driver.find_elements(By.CLASS_NAME, 'job_seen_beacon')
+                links = driver.find_element(By.CLASS_NAME, 'job_seen_beacon')
                 st.text('ルート確認4')
                 st.text(f'LINKSの中身：{links}')
                 break
@@ -79,9 +79,11 @@ if press_button:
                 print("リンクのクリックに失敗:", e)
                 continue  # 失敗した場合は次のリンクに進む
 
+            st.text('ルート確認6')
             # 詳細ページが読み込まれるまで待機
             wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'jobsearch-HeaderContainer')))
             time.sleep(10)
+            st.text('ルート確認7')
 
             # 初期値を設定
             title = location = company = tel = desired_element = "該当無し"
