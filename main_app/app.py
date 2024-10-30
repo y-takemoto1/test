@@ -57,12 +57,14 @@ if press_button:
     #　 　　　　↓
     while j <= 10:
         print('COUNT:', c)
-        time.sleep(1)
+        time.sleep(5)
         st.text('ルート確認3')
         while k <= 5:
             try:
-                links = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'job_seen_beacon')))
+                #links = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'job_seen_beacon')))
+                links = driver.find_elements(By.CLASS_NAME, 'job_seen_beacon')
                 st.text('ルート確認4')
+                st.text(f'LINKSの中身：{links}')
                 break
             except Exception as e:
                 k += 1
