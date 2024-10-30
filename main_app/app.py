@@ -58,6 +58,7 @@ if press_button:
         time.sleep(5)
         st.text('ルート確認2')
         while k <= 2:
+            print('ルート')
             try:
                 links = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'job_seen_beacon')))
                 #links = driver.find_element(By.CLASS_NAME, 'job_seen_beacon')
