@@ -70,6 +70,7 @@ if press_button:
                 st.text(f"求人情報の取得に失敗: {e}")
                 driver.quit()
                 st.stop()  # エラーが発生したら処理を終了
+        print('ルート確認11111')
 
         for link in links:
             # リンクをクリックする前に、再度要素を取得
