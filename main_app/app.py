@@ -60,7 +60,7 @@ if press_button:
         while k <= 2:
             st.text('ルート1')
             elements = driver.find_elements(By.XPATH, '//*[@your-attribute-name]')
-            st.text(elements)
+            st.text(elements).text
             # 各要素のテキストや属性を表示
             for element in elements:
                 st.text(element.text)  # テキストを取得
