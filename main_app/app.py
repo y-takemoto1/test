@@ -46,30 +46,29 @@ if press_button:
     # URLで指定したwebページを開く
     driver.get(URL)
     # ページが読み込まれるまで待機
-    wait = WebDriverWait(driver, 10)
+    wait = WebDriverWait(driver, 20)
     st.text('ルート確認１')
-    time.sleep(10)
     c = 1
     j = 1
     k = 1
-    st.text('ルート確認2')
     # 1ページにつき15件あるため15件単位取得される(例：10にすると150件取得可能)
     #　 　　　　↓
     while j <= 10:
         print('COUNT:', c)
         time.sleep(5)
-        st.text('ルート確認3')
-        while k <= 5:
+        st.text('ルート確認2')
+        while k <= 2:
             try:
-                #links = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'job_seen_beacon')))
-                links = driver.find_element(By.CLASS_NAME, 'job_seen_beacon')
-                st.text('ルート確認4')
+                links = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'job_seen_beacon')))
+                #links = driver.find_element(By.CLASS_NAME, 'job_seen_beacon')
+                st.text('ルート確認3')
                 st.text(f'LINKSの中身：{links}')
                 break
             except Exception as e:
                 k += 1
-                st.text('ルート確認5(ELSE)')
-                st.text(f"求人情報の取得に失敗:{e}")
+                st.text(f"求人情報の取得に失敗: {e}")
+                driver.quit()
+                st.stop()  # エラーが発生したら処理を終了
 
         for link in links:
             # リンクをクリックする前に、再度要素を取得
@@ -79,11 +78,11 @@ if press_button:
                 print("リンクのクリックに失敗:", e)
                 continue  # 失敗した場合は次のリンクに進む
 
-            st.text('ルート確認6')
+            st.text('ルート確認5')
             # 詳細ページが読み込まれるまで待機
             wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'jobsearch-HeaderContainer')))
             time.sleep(10)
-            st.text('ルート確認7')
+            st.text('ルート確認6')
 
             # 初期値を設定
             title = location = company = tel = desired_element = "該当無し"
