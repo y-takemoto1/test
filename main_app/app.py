@@ -66,6 +66,7 @@ if press_button:
                 break
             except Exception as e:
                 k += 1
+                st.text('ルート確認4')
                 st.text(f"求人情報の取得に失敗: {e}")
                 driver.quit()
                 st.stop()  # エラーが発生したら処理を終了
