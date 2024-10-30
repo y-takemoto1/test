@@ -126,7 +126,7 @@ if press_button:
             ws.cell(row=c, column=5, value=desired_element)
             
             c += 1
-            
+            st.text(f'抽出件数：{c}件目')
             # 詳細ページから戻る
             #driver.back()
             wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'job_seen_beacon')))
@@ -164,5 +164,5 @@ if press_button:
     # webページを閉じる
     driver.close()
 
-# スクレピン完了したことをstreamlitアプリ上に表示する
-st.write("スクレイピング完了!!!")
+    # スクレピン完了したことをstreamlitアプリ上に表示する
+    st.write("スクレイピング完了!!!")
