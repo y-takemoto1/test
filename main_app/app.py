@@ -59,14 +59,12 @@ if press_button:
         st.text('ルート確認2')
         while k <= 2:
             st.text('ルート1')
-            elements = driver.find_elements(By.XPATH, '//')
+            elements = driver.find_elements(By.XPATH, '//*')
             st.text(elements)
             # 各要素のテキストや属性を表示
             for element in elements:
                 st.text(element.text)  # テキストを取得
                 # 例えば、特定の属性の値を取得したい場合
-                attribute_value = element.get_attribute('your-attribute-name')
-                st.text(attribute_value)
                 st.text('ルート2')
 
             try:
