@@ -47,16 +47,18 @@ if press_button:
     driver.get(URL)
     # ページが読み込まれるまで待機
     wait = WebDriverWait(driver, 10)
+    st.text('ルート確認１')
     time.sleep(10)
     c = 1
     j = 1
     k = 1
-
+    st.text('ルート確認2')
     # 1ページにつき15件あるため15件単位取得される(例：10にすると150件取得可能)
     #　 　　　　↓
     while j <= 10:
         print('COUNT:', c)
         time.sleep(1)
+        st.text('ルート確認3')
         while k <= 5:
             try:
                 links = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'job_seen_beacon')))
