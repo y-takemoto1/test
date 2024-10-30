@@ -62,9 +62,11 @@ if press_button:
         while k <= 5:
             try:
                 links = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'job_seen_beacon')))
+                st.text('ルート確認4')
                 break
             except Exception as e:
                 k += 1
+                st.text('ルート確認5(ELSE)')
                 st.text(f"求人情報の取得に失敗:{e}")
 
         for link in links:
