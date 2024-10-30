@@ -156,13 +156,13 @@ if press_button:
             print('ポップアップ無し') 
         j += 1
 
-wb.save("INDEED.xlsx")
-wb.close()
+    wb.save("INDEED.xlsx")
+    wb.close()
 
-time.sleep(10)
+    time.sleep(10)
 
-# webページを閉じる
-driver.close()
+    # webページを閉じる
+    driver.close()
 
 # スクレピン完了したことをstreamlitアプリ上に表示する
 st.write("スクレイピング完了!!!")
