@@ -65,8 +65,8 @@ if press_button:
             for element in elements:
                 st.text(element.text)  # テキストを取得
                 # 例えば、特定の属性の値を取得したい場合
-                st.text('ルート2')
 
+            st.text('ルート2')
             try:
                 links = wait.until(EC.presence_of_all_elements_located((By.ID, 'mainContentTable')))
                 #links = driver.find_element(By.CLASS_NAME, 'job_seen_beacon')
