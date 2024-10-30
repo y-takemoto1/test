@@ -60,7 +60,7 @@ if press_button:
         while k <= 2:
             st.text('ルート')
             try:
-                links = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'css-1afmp4o')))
+                links = wait.until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'css-1ac2h1w')))
                 #links = driver.find_element(By.CLASS_NAME, 'job_seen_beacon')
                 st.text('ルート確認3')
                 st.text(f'LINKSの中身：{links}')
